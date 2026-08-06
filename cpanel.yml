@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/ennovat1/public_html/towera.ennovatech.com/
+    - /bin/sh -c 'for item in out/*; do name=$(basename "$item"); /bin/rm -rf "$DEPLOYPATH/$name"; done'
+    - /bin/cp -r out/* $DEPLOYPATH

@@ -53,12 +53,12 @@ export default function Hero() {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <a
+          {/* <a
             href="/products"
             className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-primary-500 text-background-50 font-semibold text-sm hover:bg-primary-600 active:scale-95 transition-all duration-200 whitespace-nowrap cursor-pointer"
           >
             Explore our datasets
-          </a>
+          </a> */}
           <a
             href="/contact"
             className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white/10 text-white font-semibold text-sm hover:bg-white/20 active:scale-95 backdrop-blur-sm border border-white/15 transition-all duration-200 whitespace-nowrap cursor-pointer"
@@ -67,7 +67,7 @@ export default function Hero() {
           </a>
         </div>
 
-        <div
+        {/* <div
           className={`mt-16 flex items-center justify-center gap-8 md:gap-12 transition-all duration-700 delay-400 ${
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
@@ -89,7 +89,7 @@ export default function Hero() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">

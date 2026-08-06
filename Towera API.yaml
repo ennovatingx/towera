@@ -1,0 +1,2777 @@
+openapi: 3.0.3
+info:
+  title: Towera API
+  version: 1.0.0
+  description: 'Language-agnostic data collection platform: phrases, translations,
+    audio, review, export.'
+paths:
+  /api/audio/:
+    get:
+      operationId: audio_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: translation
+        schema:
+          type: integer
+      tags:
+      - audio
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/PaginatedAudioRecordingList'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    post:
+      operationId: audio_create
+      tags:
+      - audio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AudioRecording'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AudioRecording'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AudioRecording'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AudioRecording'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/audio/{id}/:
+    get:
+      operationId: audio_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this audio recording.
+        required: true
+      tags:
+      - audio
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AudioRecording'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    put:
+      operationId: audio_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this audio recording.
+        required: true
+      tags:
+      - audio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AudioRecording'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AudioRecording'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AudioRecording'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AudioRecording'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    patch:
+      operationId: audio_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this audio recording.
+        required: true
+      tags:
+      - audio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAudioRecording'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAudioRecording'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAudioRecording'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AudioRecording'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    delete:
+      operationId: audio_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this audio recording.
+        required: true
+      tags:
+      - audio
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/audio/presign/:
+    post:
+      operationId: audio_presign_create
+      tags:
+      - audio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AudioPresignRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AudioPresignRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AudioPresignRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AudioPresignResponse'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/auth/me/:
+    get:
+      operationId: auth_me_retrieve
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/User'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    put:
+      operationId: auth_me_update
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/User'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    patch:
+      operationId: auth_me_partial_update
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/User'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/auth/register/:
+    post:
+      operationId: auth_register_create
+      description: Public self-registration. Always creates a Contributor account.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Register'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/auth/token/:
+    post:
+      operationId: auth_token_create
+      description: POST {username, password} -> {access, refresh}.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/TokenObtainPair'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/auth/token/refresh/:
+    post:
+      operationId: auth_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/TokenRefresh'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/dialects/:
+    get:
+      operationId: dialects_list
+      parameters:
+      - in: query
+        name: language
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - dialects
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/PaginatedDialectList'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    post:
+      operationId: dialects_create
+      tags:
+      - dialects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dialect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Dialect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Dialect'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Dialect'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/dialects/{id}/:
+    get:
+      operationId: dialects_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dialect.
+        required: true
+      tags:
+      - dialects
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Dialect'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    put:
+      operationId: dialects_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dialect.
+        required: true
+      tags:
+      - dialects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dialect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Dialect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Dialect'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Dialect'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    patch:
+      operationId: dialects_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dialect.
+        required: true
+      tags:
+      - dialects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDialect'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDialect'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDialect'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Dialect'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    delete:
+      operationId: dialects_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this dialect.
+        required: true
+      tags:
+      - dialects
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/export/dataset/:
+    get:
+      operationId: export_dataset_retrieve
+      description: |-
+        GET /api/export/dataset/?export_format=json|csv&status=approved&language=&dialect=&category=&include_audio_urls=false
+
+        Note: the query param is `export_format`, not `format` — DRF reserves
+        `format` for its own content-negotiation and 404s on unknown values.
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+        description: Filter by Phrase category.
+      - in: query
+        name: dialect
+        schema:
+          type: integer
+        description: Filter by Dialect id.
+      - in: query
+        name: export_format
+        schema:
+          type: string
+        description: '''json'' (default) or ''csv''.'
+      - in: query
+        name: include_audio_urls
+        schema:
+          type: boolean
+        description: Generate a pre-signed playback URL per row (extra S3 call per
+          row with audio).
+      - in: query
+        name: language
+        schema:
+          type: integer
+        description: Filter by target Language id.
+      - in: query
+        name: phrase
+        schema:
+          type: integer
+        description: Filter by Phrase id.
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: '''approved'' (default), ''pending'', ''rejected'', or ''all''.'
+      tags:
+      - export
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/DatasetExportResponse'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/languages/:
+    get:
+      operationId: languages_list
+      parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - languages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/PaginatedLanguageList'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    post:
+      operationId: languages_create
+      tags:
+      - languages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Language'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Language'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Language'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/languages/{id}/:
+    get:
+      operationId: languages_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this language.
+        required: true
+      tags:
+      - languages
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Language'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    put:
+      operationId: languages_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this language.
+        required: true
+      tags:
+      - languages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Language'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Language'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Language'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Language'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    patch:
+      operationId: languages_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this language.
+        required: true
+      tags:
+      - languages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLanguage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLanguage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLanguage'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Language'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    delete:
+      operationId: languages_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this language.
+        required: true
+      tags:
+      - languages
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/phrases/:
+    get:
+      operationId: phrases_list
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: source_language
+        schema:
+          type: integer
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/PaginatedPhraseList'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    post:
+      operationId: phrases_create
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Phrase'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/phrases/{id}/:
+    get:
+      operationId: phrases_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this phrase.
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Phrase'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    put:
+      operationId: phrases_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this phrase.
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Phrase'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Phrase'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    patch:
+      operationId: phrases_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this phrase.
+        required: true
+      tags:
+      - phrases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPhrase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPhrase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPhrase'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Phrase'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    delete:
+      operationId: phrases_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this phrase.
+        required: true
+      tags:
+      - phrases
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/reviews/:
+    get:
+      operationId: reviews_list
+      parameters:
+      - in: query
+        name: decision
+        schema:
+          type: string
+          x-spec-enum-id: 1420e94e9a7846e2
+          enum:
+          - approved
+          - rejected
+        description: |-
+          * `approved` - Approved
+          * `rejected` - Rejected
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: reviewer
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: translation
+        schema:
+          type: integer
+      tags:
+      - reviews
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/PaginatedReviewList'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/reviews/{id}/:
+    get:
+      operationId: reviews_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this review.
+        required: true
+      tags:
+      - reviews
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Review'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/translations/:
+    get:
+      operationId: translations_list
+      parameters:
+      - in: query
+        name: contributor
+        schema:
+          type: integer
+      - in: query
+        name: dialect
+        schema:
+          type: integer
+      - in: query
+        name: language
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: phrase
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          x-spec-enum-id: de3702061fc1d433
+          enum:
+          - approved
+          - pending
+          - rejected
+        description: |-
+          * `pending` - Pending
+          * `approved` - Approved
+          * `rejected` - Rejected
+      tags:
+      - translations
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/PaginatedTranslationList'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    post:
+      operationId: translations_create
+      tags:
+      - translations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Translation'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/translations/{id}/:
+    get:
+      operationId: translations_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this translation.
+        required: true
+      tags:
+      - translations
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Translation'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    put:
+      operationId: translations_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this translation.
+        required: true
+      tags:
+      - translations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Translation'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    patch:
+      operationId: translations_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this translation.
+        required: true
+      tags:
+      - translations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTranslation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTranslation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTranslation'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Translation'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    delete:
+      operationId: translations_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this translation.
+        required: true
+      tags:
+      - translations
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/translations/{id}/review/:
+    post:
+      operationId: translations_review_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this translation.
+        required: true
+      tags:
+      - translations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Translation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Translation'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/Translation'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/users/:
+    get:
+      operationId: users_list
+      description: 'Admin-only user management: list contributors/reviewers, change
+        roles, deactivate.'
+      parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: role
+        schema:
+          type: string
+          x-spec-enum-id: 503259a13f13bb65
+          enum:
+          - admin
+          - contributor
+          - reviewer
+        description: |-
+          * `admin` - Admin
+          * `contributor` - Contributor
+          * `reviewer` - Reviewer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/PaginatedAdminUserList'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    post:
+      operationId: users_create
+      description: 'Admin-only user management: list contributors/reviewers, change
+        roles, deactivate.'
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminUser'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AdminUser'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+  /api/users/{id}/:
+    get:
+      operationId: users_retrieve
+      description: 'Admin-only user management: list contributors/reviewers, change
+        roles, deactivate.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AdminUser'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    put:
+      operationId: users_update
+      description: 'Admin-only user management: list contributors/reviewers, change
+        roles, deactivate.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminUser'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AdminUser'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    patch:
+      operationId: users_partial_update
+      description: 'Admin-only user management: list contributors/reviewers, change
+        roles, deactivate.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responseCode:
+                    type: integer
+                    example: 200
+                  responseMessage:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: '#/components/schemas/AdminUser'
+                required:
+                - responseCode
+                - responseMessage
+          description: ''
+    delete:
+      operationId: users_destroy
+      description: 'Admin-only user management: list contributors/reviewers, change
+        roles, deactivate.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    AdminUser:
+      type: object
+      description: Used by admins to view/manage any user, including role changes.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          enum:
+          - admin
+          - contributor
+          - reviewer
+          type: string
+          description: |-
+            * `admin` - Admin
+            * `contributor` - Contributor
+            * `reviewer` - Reviewer
+          x-spec-enum-id: 503259a13f13bb65
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - date_joined
+      - id
+      - username
+    AudioPresignRequest:
+      type: object
+      properties:
+        translation:
+          type: integer
+        filename:
+          type: string
+        content_type:
+          type: string
+          default: audio/mpeg
+      required:
+      - filename
+      - translation
+    AudioPresignResponse:
+      type: object
+      properties:
+        upload_url:
+          type: string
+          format: uri
+        s3_key:
+          type: string
+        content_type:
+          type: string
+      required:
+      - content_type
+      - s3_key
+      - upload_url
+    AudioRecording:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        translation:
+          type: integer
+        s3_key:
+          type: string
+          maxLength: 512
+        content_type:
+          type: string
+          maxLength: 100
+        duration_seconds:
+          type: number
+          format: double
+          nullable: true
+        uploaded_by:
+          type: integer
+          readOnly: true
+        audio_url:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - audio_url
+      - created_at
+      - id
+      - s3_key
+      - translation
+      - uploaded_by
+    DatasetExportResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetRow'
+      required:
+      - count
+      - results
+    DatasetRow:
+      type: object
+      properties:
+        phrase_id:
+          type: integer
+        source_language:
+          type: string
+        source_text:
+          type: string
+        category:
+          type: string
+        target_language:
+          type: string
+        dialect:
+          type: string
+        translation_text:
+          type: string
+        contributor:
+          type: string
+        status:
+          type: string
+        audio_s3_key:
+          type: string
+        audio_url:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required:
+      - audio_s3_key
+      - audio_url
+      - category
+      - contributor
+      - created_at
+      - dialect
+      - phrase_id
+      - source_language
+      - source_text
+      - status
+      - target_language
+      - translation_text
+    Dialect:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        language:
+          type: integer
+        language_name:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        region:
+          type: string
+          description: e.g. state/province.
+          maxLength: 100
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - language
+      - language_name
+      - name
+    Language:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        code:
+          type: string
+          nullable: true
+          description: ISO 639-1/639-3 code if available, e.g. 'yo', 'ha', 'ibo'.
+          maxLength: 10
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        dialects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dialect'
+          readOnly: true
+      required:
+      - created_at
+      - dialects
+      - id
+      - name
+    PaginatedAdminUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminUser'
+    PaginatedAudioRecordingList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioRecording'
+    PaginatedDialectList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dialect'
+    PaginatedLanguageList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Language'
+    PaginatedPhraseList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Phrase'
+    PaginatedReviewList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+    PaginatedTranslationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Translation'
+    PatchedAdminUser:
+      type: object
+      description: Used by admins to view/manage any user, including role changes.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          enum:
+          - admin
+          - contributor
+          - reviewer
+          type: string
+          description: |-
+            * `admin` - Admin
+            * `contributor` - Contributor
+            * `reviewer` - Reviewer
+          x-spec-enum-id: 503259a13f13bb65
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+    PatchedAudioRecording:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        translation:
+          type: integer
+        s3_key:
+          type: string
+          maxLength: 512
+        content_type:
+          type: string
+          maxLength: 100
+        duration_seconds:
+          type: number
+          format: double
+          nullable: true
+        uploaded_by:
+          type: integer
+          readOnly: true
+        audio_url:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedDialect:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        language:
+          type: integer
+        language_name:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        region:
+          type: string
+          description: e.g. state/province.
+          maxLength: 100
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedLanguage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        code:
+          type: string
+          nullable: true
+          description: ISO 639-1/639-3 code if available, e.g. 'yo', 'ha', 'ibo'.
+          maxLength: 10
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        dialects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dialect'
+          readOnly: true
+    PatchedPhrase:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        source_language:
+          type: integer
+        source_language_name:
+          type: string
+          readOnly: true
+        text:
+          type: string
+        category:
+          type: string
+          maxLength: 100
+        notes:
+          type: string
+        created_by:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedTranslation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phrase:
+          type: integer
+        language:
+          type: integer
+        language_name:
+          type: string
+          readOnly: true
+        dialect:
+          type: integer
+          nullable: true
+        text:
+          type: string
+        contributor:
+          type: integer
+          readOnly: true
+        status:
+          enum:
+          - pending
+          - approved
+          - rejected
+          type: string
+          description: |-
+            * `pending` - Pending
+            * `approved` - Approved
+            * `rejected` - Rejected
+          x-spec-enum-id: de3702061fc1d433
+          readOnly: true
+        reviewed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        reviewed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        audio_recordings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioRecording'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          enum:
+          - admin
+          - contributor
+          - reviewer
+          type: string
+          description: |-
+            * `admin` - Admin
+            * `contributor` - Contributor
+            * `reviewer` - Reviewer
+          x-spec-enum-id: 503259a13f13bb65
+          readOnly: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+    Phrase:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        source_language:
+          type: integer
+        source_language_name:
+          type: string
+          readOnly: true
+        text:
+          type: string
+        category:
+          type: string
+          maxLength: 100
+        notes:
+          type: string
+        created_by:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - created_by
+      - id
+      - source_language
+      - source_language_name
+      - text
+      - updated_at
+    Register:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - id
+      - password
+      - username
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        translation:
+          type: integer
+        reviewer:
+          type: integer
+          readOnly: true
+        decision:
+          enum:
+          - approved
+          - rejected
+          type: string
+          description: |-
+            * `approved` - Approved
+            * `rejected` - Rejected
+          x-spec-enum-id: 1420e94e9a7846e2
+        comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - decision
+      - id
+      - reviewer
+      - translation
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    Translation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        phrase:
+          type: integer
+        language:
+          type: integer
+        language_name:
+          type: string
+          readOnly: true
+        dialect:
+          type: integer
+          nullable: true
+        text:
+          type: string
+        contributor:
+          type: integer
+          readOnly: true
+        status:
+          enum:
+          - pending
+          - approved
+          - rejected
+          type: string
+          description: |-
+            * `pending` - Pending
+            * `approved` - Approved
+            * `rejected` - Rejected
+          x-spec-enum-id: de3702061fc1d433
+          readOnly: true
+        reviewed_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        reviewed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        audio_recordings:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudioRecording'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - audio_recordings
+      - contributor
+      - created_at
+      - id
+      - language
+      - language_name
+      - phrase
+      - reviewed_at
+      - reviewed_by
+      - status
+      - text
+      - updated_at
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          enum:
+          - admin
+          - contributor
+          - reviewer
+          type: string
+          description: |-
+            * `admin` - Admin
+            * `contributor` - Contributor
+            * `reviewer` - Reviewer
+          x-spec-enum-id: 503259a13f13bb65
+          readOnly: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - date_joined
+      - id
+      - role
+      - username
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

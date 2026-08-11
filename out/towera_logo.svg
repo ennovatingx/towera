@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400">
+<defs>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#FFD76A"/>
+    <stop offset="0.55" stop-color="#F5B83D"/>
+    <stop offset="1" stop-color="#D99521"/>
+  </linearGradient>
+</defs>
+
+<!-- Tower mark -->
+<g transform="translate(35 55)">
+  <!-- spire -->
+  <path d="M122 0 L135 13 L122 27 L109 13 Z" fill="url(#gold)"/>
+  <!-- tower body -->
+  <path d="M55 220 L70 65 L122 35 L174 65 L189 220 Z"
+        fill="url(#gold)" stroke="#F6C34E" stroke-width="3"/>
+  <!-- tier divisions -->
+  <path d="M70 65 L174 65 M63 112 L181 112 M59 166 L185 166"
+        fill="none" stroke="#FFF0B8" stroke-width="7" opacity=".75"/>
+  <!-- dark window arches -->
+  <g fill="#061A31">
+    <path d="M82 86 Q82 73 94 73 Q106 73 106 86 L106 109 L82 109 Z"/>
+    <path d="M119 86 Q119 73 131 73 Q143 73 143 86 L143 109 L119 109 Z"/>
+    <path d="M156 86 Q156 73 168 73 Q180 73 180 86 L180 109 L156 109 Z"/>
+
+    <path d="M76 126 Q76 111 89 111 Q102 111 102 126 L102 155 L76 155 Z"/>
+    <path d="M112 126 Q112 111 125 111 Q138 111 138 126 L138 155 L112 155 Z"/>
+    <path d="M148 126 Q148 111 161 111 Q174 111 174 126 L174 155 L148 155 Z"/>
+
+    <path d="M70 181 Q70 165 84 165 Q98 165 98 181 L98 211 L70 211 Z"/>
+    <path d="M108 181 Q108 165 122 165 Q136 165 136 181 L136 211 L108 211 Z"/>
+    <path d="M146 181 Q146 165 160 165 Q174 165 174 181 L174 211 L146 211 Z"/>
+  </g>
+  <!-- base -->
+  <path d="M45 220 Q122 195 199 220 L180 229 Q122 214 64 229 Z"
+        fill="#0B3B43" stroke="#F5B83D" stroke-width="3"/>
+</g>
+
+<!-- Wordmark -->
+<g transform="translate(275 112)">
+  <text x="0" y="105" font-family="Arial, Helvetica, sans-serif"
+        font-size="118" font-weight="700" letter-spacing="2"
+        fill="#FFFFFF">TOW</text>
+  <!-- stylized E -->
+  <path d="M330 15 H405 V32 H352 V60 H398 V77 H352 V105 H405 V122 H330 Z"
+        fill="#FFFFFF"/>
+  <text x="415" y="105" font-family="Arial, Helvetica, sans-serif"
+        font-size="118" font-weight="700" letter-spacing="2"
+        fill="#FFFFFF">R</text>
+  <!-- stylized A -->
+  <path d="M540 122 L585 10 H612 L657 122 H631 L621 96 H574 L564 122 Z
+           M581 77 H614 L598 35 Z" fill="url(#gold)"/>
+  <text x="0" y="165" font-family="Arial, Helvetica, sans-serif"
+        font-size="24" font-weight="600" letter-spacing="5"
+        fill="#F5B83D">ONE TOWER. MANY VOICES. LIMITLESS POSSIBILITIES.</text>
+</g>
+</svg>

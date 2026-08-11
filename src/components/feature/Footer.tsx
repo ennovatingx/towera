@@ -78,8 +78,8 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Towera. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="text-foreground-400 hover:text-white transition-colors text-sm cursor-pointer">Privacy</a>
-            <a href="#" className="text-foreground-400 hover:text-white transition-colors text-sm cursor-pointer">Terms</a>
+            <a href="/privacy" className="text-foreground-400 hover:text-white transition-colors text-sm cursor-pointer">Privacy</a>
+            <a href="/terms" className="text-foreground-400 hover:text-white transition-colors text-sm cursor-pointer">Terms</a>
             <a href="#" className="text-foreground-400 hover:text-white transition-colors cursor-pointer">
               <i className="ri-twitter-x-line text-base"></i>
             </a>

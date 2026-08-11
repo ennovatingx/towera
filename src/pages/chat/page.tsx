@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 
 type ChatState = 'idle' | 'listening' | 'thinking' | 'speaking';
 
@@ -135,6 +136,10 @@ function Orb({ state }: { state: ChatState }) {
 }
 
 export default function ChatPage() {
+  useDocumentMeta(
+    'Converse with Towera — Ask About Nigerian Language Datasets',
+    'Talk to Towera by voice or text to explore our Nigerian language datasets, products, and how to contribute.'
+  );
   const navigate = useNavigate();
   const [chatState, setChatState] = useState<ChatState>('idle');
   const [messages, setMessages] = useState<Message[]>([]);

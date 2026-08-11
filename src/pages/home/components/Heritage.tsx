@@ -26,7 +26,7 @@ export default function Heritage() {
     <section ref={ref} className="relative py-24 md:py-32 px-4 md:px-6 overflow-hidden">
       <div className="absolute inset-0">
         <img
-          src="https://readdy.ai/api/search-image?query=A%20rich%20artistic%20collage%20celebrating%20the%20cultural%20diversity%20of%20Nigerian%20ethnic%20groups%20featuring%20traditional%20Yoruba%20gele%20headwraps%20and%20agbada%20robes%20Igbo%20isiagu%20patterned%20textiles%20and%20coral%20beads%20Hausa-Fulani%20embroidered%20babban%20riga%20and%20caps%20Tiv%20angere%20stripes%20Ijaw%20traditional%20attire%20Edo%20coral%20regalia%20warm%20amber%20terracotta%20and%20gold%20tones%20editorial%20photography%20style%20with%20artistic%20double%20exposures%20and%20overlapping%20portrait%20silhouettes%20celebrating%20Nigerias%20linguistic%20and%20cultural%20heritage%20soft%20warm%20lighting%20museum%20quality%20composition&width=1800&height=900&seq=towera-heritage-collage&orientation=landscape"
+          src="/heritage.jpg"
           alt="Nigeria's rich linguistic and cultural heritage across Yoruba, Igbo, Hausa, Fulani, Tiv, Ijaw, Edo, and many more ethnic groups"
           className="w-full h-full object-cover object-top"
         />

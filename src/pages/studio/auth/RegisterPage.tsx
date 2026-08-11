@@ -13,6 +13,7 @@ export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -79,10 +80,30 @@ export default function RegisterPage() {
             className={fieldClasses}
           />
         </div>
+        <label className="flex items-start gap-2.5 cursor-pointer">
+          <input
+            type="checkbox"
+            required
+            checked={agreedToTerms}
+            onChange={(e) => setAgreedToTerms(e.target.checked)}
+            className="mt-0.5 h-4 w-4 rounded border-background-300 text-primary-600 focus:ring-primary-400 cursor-pointer"
+          />
+          <span className="text-xs text-foreground-600 leading-relaxed">
+            I agree to Towera's{' '}
+            <Link to="/terms" target="_blank" className="text-primary-600 font-medium hover:text-primary-700">
+              Terms of Service
+            </Link>{' '}
+            and{' '}
+            <Link to="/privacy" target="_blank" className="text-primary-600 font-medium hover:text-primary-700">
+              Privacy Policy
+            </Link>
+            , including how my submitted translations and voice recordings may be used.
+          </span>
+        </label>
         {error && <p className="text-sm text-accent-600">{error}</p>}
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || !agreedToTerms}
           className="w-full py-2.5 rounded-full text-sm font-medium bg-primary-500 text-background-50 hover:bg-primary-600 transition-colors duration-200 cursor-pointer disabled:opacity-60"
         >
           {submitting ? 'Creating account...' : 'Create account'}

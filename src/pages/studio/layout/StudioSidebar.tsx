@@ -18,6 +18,7 @@ const NAV_BY_ROLE: Record<User['role'], NavItem[]> = {
     { to: '/studio/admin/users', label: 'Users', icon: 'ri-team-line' },
     { to: '/studio/admin/export', label: 'Export', icon: 'ri-download-2-line' },
     { to: '/studio/admin/payouts', label: 'Payouts', icon: 'ri-wallet-3-line' },
+    { to: '/studio/admin/legal', label: 'Legal Pages', icon: 'ri-file-shield-2-line' },
   ],
   contributor: [
     { to: '/studio/contribute', label: 'Phrases', icon: 'ri-chat-quote-line', end: true },

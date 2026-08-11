@@ -3,6 +3,10 @@ import { Outlet } from "react-router-dom";
 import NotFound from "../pages/NotFound";
 import Home from "../pages/home/page";
 import Chat from "../pages/chat/page";
+import ComingSoonPage from "../pages/ComingSoonPage";
+import PrivacyPolicyPage from "../pages/legal/PrivacyPolicyPage";
+import TermsPage from "../pages/legal/TermsPage";
+import LicensesPage from "../pages/legal/LicensesPage";
 
 import StudioLanding from "../pages/studio/page";
 import StudioAuthProvider from "../pages/studio/layout/StudioAuthProvider";
@@ -22,11 +26,13 @@ import AdminTranslationsPage from "../pages/studio/admin/TranslationsPage";
 import AdminUsersPage from "../pages/studio/admin/UsersPage";
 import AdminExportPage from "../pages/studio/admin/ExportPage";
 import AdminPayoutsPage from "../pages/studio/admin/PayoutsPage";
+import AdminLegalDocumentsPage from "../pages/studio/admin/LegalDocumentsPage";
 
 import ContributePhraseListPage from "../pages/studio/contribute/PhraseListPage";
 import ContributeTranslatePage from "../pages/studio/contribute/TranslatePage";
 import MySubmissionsPage from "../pages/studio/contribute/MySubmissionsPage";
 import EarningsPage from "../pages/studio/contribute/EarningsPage";
+import ContributorConsentGate from "../pages/studio/contribute/components/ContributorConsentGate";
 
 import ReviewQueuePage from "../pages/studio/review/QueuePage";
 import ReviewDetailPage from "../pages/studio/review/DetailPage";
@@ -39,6 +45,58 @@ const routes: RouteObject[] = [
   {
     path: "/chat",
     element: <Chat />,
+  },
+  {
+    path: "/api",
+    element: (
+      <ComingSoonPage
+        title="API Access & Documentation"
+        description="API Access and documentation coming soon."
+        icon="ri-code-s-slash-line"
+      />
+    ),
+  },
+  {
+    path: "/products",
+    element: (
+      <ComingSoonPage
+        title="Products"
+        description="A full breakdown of Towera Atlas, Voice, Corpus, Translate, Studio, and API is coming soon."
+        icon="ri-apps-2-line"
+      />
+    ),
+  },
+  {
+    path: "/about",
+    element: (
+      <ComingSoonPage
+        title="About Towera"
+        description="Our story, mission, and team page is coming soon."
+        icon="ri-team-line"
+      />
+    ),
+  },
+  {
+    path: "/datasets",
+    element: (
+      <ComingSoonPage
+        title="Dataset Catalog"
+        description="A searchable catalog of our licensed Nigerian language datasets is coming soon."
+        icon="ri-database-2-line"
+      />
+    ),
+  },
+  {
+    path: "/privacy",
+    element: <PrivacyPolicyPage />,
+  },
+  {
+    path: "/terms",
+    element: <TermsPage />,
+  },
+  {
+    path: "/licenses",
+    element: <LicensesPage />,
   },
   {
     path: "/studio",
@@ -69,16 +127,22 @@ const routes: RouteObject[] = [
               { path: "users", element: <AdminUsersPage /> },
               { path: "export", element: <AdminExportPage /> },
               { path: "payouts", element: <AdminPayoutsPage /> },
+              { path: "legal", element: <AdminLegalDocumentsPage /> },
             ],
           },
           {
             path: "contribute",
             element: <RoleGuard allow={["contributor"]} />,
             children: [
-              { index: true, element: <ContributePhraseListPage /> },
-              { path: "my-submissions", element: <MySubmissionsPage /> },
-              { path: "earnings", element: <EarningsPage /> },
-              { path: ":phraseId", element: <ContributeTranslatePage /> },
+              {
+                element: <ContributorConsentGate />,
+                children: [
+                  { index: true, element: <ContributePhraseListPage /> },
+                  { path: "my-submissions", element: <MySubmissionsPage /> },
+                  { path: "earnings", element: <EarningsPage /> },
+                  { path: ":phraseId", element: <ContributeTranslatePage /> },
+                ],
+              },
             ],
           },
           {

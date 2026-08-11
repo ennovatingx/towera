@@ -8,3 +8,5 @@ export * from './reviews';
 export * from './users';
 export * from './export';
 export * from './payouts';
+export * from './legal';
+export * from './consent';

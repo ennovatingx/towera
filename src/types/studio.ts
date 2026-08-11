@@ -114,6 +114,17 @@ export interface PayoutRequest {
   created_at: string;
 }
 
+export type LegalDocumentType = 'privacy' | 'terms' | 'licenses';
+
+/** Not a real backend concept yet — see src/api/legal.ts. */
+export interface LegalDocument {
+  type: LegalDocumentType;
+  title: string;
+  /** Markdown-lite source — see src/lib/markdownLite.tsx for the supported syntax. */
+  content: string;
+  updatedAt: string;
+}
+
 export interface DatasetRow {
   phrase_id: number;
   source_language: string;

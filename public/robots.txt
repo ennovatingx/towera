@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+Sitemap: https://towera.ennovatingx.com/sitemap.xml

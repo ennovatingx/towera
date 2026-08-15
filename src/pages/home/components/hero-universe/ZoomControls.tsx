@@ -8,7 +8,7 @@ const ZOOM_SCALE = 0.8;
 
 /** Explicit zoom in/out control — the primary way to zoom now that wheel/touch-pinch don't hijack page scroll. */
 export default function ZoomControls() {
-  const { controlsRef, panelOpen } = useHeroUniverse();
+  const { controlsRef, panelOpen, panelExpanded } = useHeroUniverse();
 
   const dollyIn = useCallback(() => {
     controlsRef.current?.dollyIn(ZOOM_SCALE);
@@ -20,9 +20,9 @@ export default function ZoomControls() {
 
   return (
     <div
-      className={`absolute left-4 z-[200] flex flex-row sm:flex-col overflow-hidden rounded-xl border border-white/15 bg-foreground-950/70 backdrop-blur-sm transition-[bottom] duration-300 ease-out ${
+      className={`absolute left-4 z-[200] flex flex-row sm:flex-col overflow-hidden rounded-xl border border-white/15 bg-foreground-950/70 backdrop-blur-sm transition-[bottom,opacity] duration-300 ease-out ${
         panelOpen ? 'bottom-[calc(45vh+16px)]' : 'bottom-4'
-      } sm:bottom-8 sm:left-8`}
+      } ${panelExpanded ? 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto' : 'opacity-100'} sm:bottom-8 sm:left-8`}
     >
       <button
         type="button"

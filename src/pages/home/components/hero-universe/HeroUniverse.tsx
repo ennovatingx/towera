@@ -18,6 +18,7 @@ export default function HeroUniverse() {
   const [activeId, setActiveId] = useState(DEFAULT_ACTIVE_NODE_ID);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
+  const [panelExpanded, setPanelExpanded] = useState(false);
   const [reducedMotion] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
   );
@@ -62,8 +63,10 @@ export default function HeroUniverse() {
       supportsHover,
       panelOpen,
       setPanelOpen,
+      panelExpanded,
+      setPanelExpanded,
     }),
-    [activeId, hoveredId, requestActivate, reducedMotion, supportsHover, panelOpen]
+    [activeId, hoveredId, requestActivate, reducedMotion, supportsHover, panelOpen, panelExpanded]
   );
 
   const setRefs = useCallback(

@@ -47,8 +47,7 @@ export default function Hero() {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >
-          Drag to explore the data universe — Use cases of Towera Datasets — Towera is the data
-          infrastructure behind every Nigerian AI markets.
+          Drag to explore the data universe — Use cases of Towera Datasets — Towera is the data infrastructure behind Nigeria's AI economy.
         </p>
 
         <div

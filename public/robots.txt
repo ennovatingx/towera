@@ -9,4 +9,142 @@ Disallow: /studio/contribute
 Disallow: /studio/review
 Disallow: /studio/account
 
+# Named AI crawlers get the same policy as everyone else — explicit entries so
+# they don't fall back to a conservative default if a given crawler treats an
+# unnamed wildcard group as "unspecified" for it. A robots.txt group is matched
+# by exact user-agent name when one exists, so the disallow list has to be
+# repeated per bot rather than inherited from the `*` group above.
+
+User-agent: GPTBot
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: ChatGPT-User
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: ClaudeBot
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: Claude-Web
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: anthropic-ai
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: Google-Extended
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: PerplexityBot
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: CCBot
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: Bytespider
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: Applebot-Extended
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: Meta-ExternalAgent
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
+User-agent: Amazonbot
+Disallow: /studio/login
+Disallow: /studio/register
+Disallow: /studio/forgot-password
+Disallow: /studio/reset-password
+Disallow: /studio/dashboard
+Disallow: /studio/admin
+Disallow: /studio/contribute
+Disallow: /studio/review
+Disallow: /studio/account
+
 Sitemap: https://towera.ennovatingx.com/sitemap.xml

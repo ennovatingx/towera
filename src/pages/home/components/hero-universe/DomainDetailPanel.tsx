@@ -1,11 +1,21 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import { clamp } from '@/lib/heroUniverseMath';
 import { getDomainNode, DEFAULT_ACTIVE_NODE_ID } from './domainData';
 import { useHeroUniverse } from './heroUniverseContext';
 import type { DomainNode } from './types';
 
-/** Downward drag distance (px) past which releasing dismisses the mobile sheet instead of snapping back. */
-const DISMISS_THRESHOLD_PX = 100;
+// The mobile sheet is a fixed h-[90vh] box; how much of it is actually visible is controlled purely by
+// translateY, so "height" is really just three translateY snap points on the same box:
+//   full (0%) -> shows the whole 90vh · half (50%) -> shows the bottom 45vh · closed (100%) -> off-screen.
+type SheetSnap = 'half' | 'full';
+const HALF_TRANSLATE_FRACTION = 0.5;
 const SNAP_TRANSITION_MS = 300;
+
+interface SnapPoint {
+  key: SheetSnap | 'closed';
+  /** translateY in px, measured from the fully-open (0px) position. */
+  translatePx: number;
+}
 
 interface MetricProps {
   label: string;
@@ -24,14 +34,16 @@ function Metric({ label, value }: MetricProps) {
 const FALLBACK_NODE = getDomainNode(DEFAULT_ACTIVE_NODE_ID)!;
 
 export default function DomainDetailPanel() {
-  const { activeId, panelOpen, setPanelOpen } = useHeroUniverse();
+  const { activeId, panelOpen, setPanelOpen, setPanelExpanded } = useHeroUniverse();
   const node = getDomainNode(activeId) ?? FALLBACK_NODE;
 
   const [displayNode, setDisplayNode] = useState<DomainNode>(node);
   const [visible, setVisible] = useState(true);
+  const [snap, setSnap] = useState<SheetSnap>('half');
 
   const sheetRef = useRef<HTMLDivElement>(null);
   const dragStartYRef = useRef<number | null>(null);
+  const dragStartTranslateRef = useRef(0);
 
   useEffect(() => {
     if (node.id === displayNode.id) return;
@@ -43,8 +55,29 @@ export default function DomainDetailPanel() {
     return () => clearTimeout(timeout);
   }, [node, displayNode.id]);
 
+  // Reset to the default half-height snap each time the sheet is freshly opened (not on every node
+  // switch while it's already open — the user's chosen height persists across those).
+  useEffect(() => {
+    if (panelOpen) setSnap('half');
+  }, [panelOpen]);
+
+  useEffect(() => {
+    setPanelExpanded(snap === 'full');
+  }, [snap, setPanelExpanded]);
+
+  const snapPoints = (sheetHeightPx: number): SnapPoint[] => [
+    { key: 'full', translatePx: 0 },
+    { key: 'half', translatePx: sheetHeightPx * HALF_TRANSLATE_FRACTION },
+    { key: 'closed', translatePx: sheetHeightPx },
+  ];
+
+  const currentTranslatePx = (sheetHeightPx: number): number =>
+    snap === 'full' ? 0 : sheetHeightPx * HALF_TRANSLATE_FRACTION;
+
   const handleDragStart = (e: ReactPointerEvent<HTMLDivElement>) => {
+    const sheetHeightPx = sheetRef.current?.getBoundingClientRect().height ?? 0;
     dragStartYRef.current = e.clientY;
+    dragStartTranslateRef.current = currentTranslatePx(sheetHeightPx);
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
@@ -52,9 +85,10 @@ export default function DomainDetailPanel() {
     const startY = dragStartYRef.current;
     const sheet = sheetRef.current;
     if (startY === null || !sheet) return;
-    const delta = Math.max(0, e.clientY - startY);
+    const sheetHeightPx = sheet.getBoundingClientRect().height;
+    const next = clamp(dragStartTranslateRef.current + (e.clientY - startY), 0, sheetHeightPx);
     sheet.style.transition = 'none';
-    sheet.style.transform = `translateY(${delta}px)`;
+    sheet.style.transform = `translateY(${next}px)`;
   };
 
   const handleDragEnd = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -63,14 +97,20 @@ export default function DomainDetailPanel() {
     dragStartYRef.current = null;
     if (startY === null || !sheet) return;
 
-    const shouldClose = e.clientY - startY > DISMISS_THRESHOLD_PX;
+    const sheetHeightPx = sheet.getBoundingClientRect().height;
+    const current = clamp(dragStartTranslateRef.current + (e.clientY - startY), 0, sheetHeightPx);
+    const nearest = snapPoints(sheetHeightPx).reduce((closest, point) =>
+      Math.abs(point.translatePx - current) < Math.abs(closest.translatePx - current) ? point : closest
+    );
+
     sheet.style.transition = `transform ${SNAP_TRANSITION_MS}ms cubic-bezier(0.32, 0.72, 0, 1)`;
-    sheet.style.transform = shouldClose ? 'translateY(110%)' : 'translateY(0)';
+    sheet.style.transform = `translateY(${nearest.translatePx}px)`;
 
     window.setTimeout(() => {
-      if (shouldClose) setPanelOpen(false);
       sheet.style.transition = '';
       sheet.style.transform = '';
+      if (nearest.key === 'closed') setPanelOpen(false);
+      else setSnap(nearest.key);
     }, SNAP_TRANSITION_MS);
   };
 
@@ -83,12 +123,12 @@ export default function DomainDetailPanel() {
       ] as const)
     : [];
 
+  const restingTranslateClass = !panelOpen ? 'translate-y-full' : snap === 'full' ? 'translate-y-0' : 'translate-y-1/2';
+
   return (
     <div
       ref={sheetRef}
-      className={`absolute z-[200] inset-x-0 bottom-0 max-h-[45vh] rounded-t-3xl border-t border-white/10 bg-foreground-950/85 backdrop-blur-xl p-6 overflow-y-auto pointer-events-auto transition-transform duration-300 ease-out ${
-        panelOpen ? 'translate-y-0' : 'translate-y-[110%]'
-      } sm:translate-y-0 sm:inset-x-auto sm:right-0 sm:top-0 sm:bottom-0 sm:max-h-none sm:w-80 sm:rounded-none sm:border-t-0 sm:border-l sm:p-8 md:w-96`}
+      className={`absolute z-[200] inset-x-0 bottom-0 h-[90vh] rounded-t-3xl border-t border-white/10 bg-foreground-950/85 backdrop-blur-xl p-6 overflow-y-auto pointer-events-auto transition-transform duration-300 ease-out ${restingTranslateClass} sm:translate-y-0 sm:inset-x-auto sm:right-0 sm:top-0 sm:bottom-0 sm:h-auto sm:max-h-none sm:w-80 sm:rounded-none sm:border-t-0 sm:border-l sm:p-8 md:w-96`}
       aria-live="polite"
     >
       <div

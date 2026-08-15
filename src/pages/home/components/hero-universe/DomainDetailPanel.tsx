@@ -128,7 +128,7 @@ export default function DomainDetailPanel() {
   return (
     <div
       ref={sheetRef}
-      className={`absolute z-[200] inset-x-0 bottom-0 h-[90vh] rounded-t-3xl border-t border-white/10 bg-foreground-950/85 backdrop-blur-xl p-6 overflow-y-auto pointer-events-auto transition-transform duration-300 ease-out ${restingTranslateClass} sm:translate-y-0 sm:inset-x-auto sm:right-0 sm:top-0 sm:bottom-0 sm:h-auto sm:max-h-none sm:w-80 sm:rounded-none sm:border-t-0 sm:border-l sm:p-8 md:w-96`}
+      className={`absolute z-[200] inset-x-0 bottom-0 h-[90vh] rounded-t-3xl border-t border-white/10 bg-foreground-950 p-6 overflow-y-auto pointer-events-auto transition-transform duration-300 ease-out ${restingTranslateClass} sm:translate-y-0 sm:inset-x-auto sm:right-0 sm:top-0 sm:bottom-0 sm:h-auto sm:max-h-none sm:w-80 sm:rounded-none sm:border-t-0 sm:border-l sm:p-8 md:w-96`}
       aria-live="polite"
     >
       <div
